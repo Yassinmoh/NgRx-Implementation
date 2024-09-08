@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from './store/Tasks/task.reducer';
+import * as taskActions from './store/Tasks/task.actions'
+
 
 @Component({
   selector: 'app-root',
@@ -8,6 +12,10 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'ip-tracker';
+export class AppComponent implements OnInit{
+  _store = inject(Store<AppState>)
+  ngOnInit(): void {
+    this._store.dispatch(taskActions.loadTasks())
+  }
+
 }
